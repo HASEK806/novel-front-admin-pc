@@ -5,29 +5,10 @@ import React from 'react';
 const Footer: React.FC = () => {
   return (
     <DefaultFooter
+      copyright="Novel Admin by NZ"
       style={{
         background: 'none',
       }}
-      links={[
-        {
-          key: 'Novel Admin',
-          title: 'Novel Admin',
-          href: '',
-          blankTarget: false,
-        },
-        {
-          key: 'NZ1',
-          title: <GithubOutlined />,
-          href: '',
-          blankTarget: false,
-        },
-        {
-          key: 'NZ2',
-          title: 'NZ',
-          href: '',
-          blankTarget: false,
-        },
-      ]}
     />
   );
 };
