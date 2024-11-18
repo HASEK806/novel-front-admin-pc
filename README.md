@@ -33,3 +33,15 @@
   - Register
   - Register Result
 ```
+
+npm start
+
+- /novels
+  ├── /novels                (小说信息列表 - Information List)
+  ├── /novels/categories     (分类列表 - Category List)
+  ├── /novels/statistics     (数据统计 - Data Statistics)
+
+- /users
+  ├── /users                 (用户列表 - User List)
+  ├── /users/roles           (角色管理 - Role Management)
+  ├── /users/permissions     (权限管理 - Permission Management)

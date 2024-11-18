@@ -47,7 +47,8 @@
     "dayjs": "^1.11.13",
     "querystring": "^0.2.1",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "swagger-ui-dist": "^5.18.2"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^3.3.0",

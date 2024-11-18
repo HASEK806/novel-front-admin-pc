@@ -29,23 +29,6 @@ export default [
     component: './Welcome',
   },
   {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/admin',
-        redirect: '/admin/sub-page',
-      },
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        component: './Admin',
-      },
-    ],
-  },
-  {
     name: 'list.table-list',
     icon: 'table',
     path: '/list',
@@ -59,5 +42,23 @@ export default [
     path: '*',
     layout: false,
     component: './404',
+  },
+  {
+    path: '/novels',
+    name: '小说管理',
+    routes: [
+      { path: '/novels', name: '信息列表', component: './Welcome' },
+      { path: '/novels/categories', name: '分类列表', component: './Welcome' },
+      { path: '/novels/statistics', name: '数据统计', component: './Welcome' },
+    ],
+  },
+  {
+    path: '/users',
+    name: '用户管理',
+    routes: [
+      { path: '/users', name: '用户列表', component: './Welcome' },
+      { path: '/users/roles', name: '角色管理', component: './Welcome' },
+      { path: '/users/permissions', name: '权限管理', component: './Welcome' },
+    ],
   },
 ];
