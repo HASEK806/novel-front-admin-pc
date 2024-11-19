@@ -49,4 +49,12 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
+  'menu.novels': 'Novels',
+  'menu.novels.list.information-list': 'Information List',
+  'menu.novels.list.category-list': 'Category List',
+  'menu.novels.data-statistics': 'Data Statistics',
+  'menu.users': 'Users',
+  'menu.users.list.user-list': 'User List',
+  'menu.users.role-management': 'Role Management',
+  'menu.users.permission-management': 'Permission Management',
 };

@@ -49,4 +49,12 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
+  'menu.novels': '小说管理',
+  'menu.novels.list.information-list': '信息列表',
+  'menu.novels.list.category-list': '分类列表',
+  'menu.novels.data-statistics': '数据统计',
+  'menu.users': '用户管理',
+  'menu.users.list.user-list': '用户列表',
+  'menu.users.role-management': '角色管理',
+  'menu.users.permission-management': '权限管理',
 };

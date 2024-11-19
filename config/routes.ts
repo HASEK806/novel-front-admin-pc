@@ -45,20 +45,20 @@ export default [
   },
   {
     path: '/novels',
-    name: '小说管理',
+    name: 'novels',
     routes: [
-      { path: '/novels', name: '信息列表', component: './Welcome' },
-      { path: '/novels/categories', name: '分类列表', component: './Welcome' },
-      { path: '/novels/statistics', name: '数据统计', component: './Welcome' },
+      { path: '/novels', name: 'list.information-list', component: './NovelList' },
+      { path: '/novels/categories', name: 'list.category-list', component: './Welcome' },
+      { path: '/novels/statistics', name: 'data-statistics', component: './Welcome' },
     ],
   },
   {
     path: '/users',
-    name: '用户管理',
+    name: 'users',
     routes: [
-      { path: '/users', name: '用户列表', component: './Welcome' },
-      { path: '/users/roles', name: '角色管理', component: './Welcome' },
-      { path: '/users/permissions', name: '权限管理', component: './Welcome' },
+      { path: '/users', name: 'list.user-list', component: './Welcome' },
+      { path: '/users/roles', name: 'role-management', component: './Welcome' },
+      { path: '/users/permissions', name: 'permission-management', component: './Welcome' },
     ],
   },
 ];
