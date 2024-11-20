@@ -1,25 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Table, Input, Form, Space, Modal, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import NovelForm from './components/novelForm';
 import './index.less';
-
+import { getBooks, deleteBook, createBook, updateBook } from '@/services/api';
 
 const NovelList: React.FC = () => {
-  // Mock 数据
-  const [dataSource, setDataSource] = useState<any[]>([
-    { id: 1, cover: 'https://via.placeholder.com/50', title: '小说 A', author: '作者 A', description: '描述 A' },
-    { id: 2, cover: 'https://via.placeholder.com/50', title: '小说 B', author: '作者 B', description: '描述 B' },
-  ]);
-
+  const [dataSource, setDataSource] = useState<any[]>([]);
   const [query, setQuery] = useState({ title: '', author: '' });
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentNovel, setCurrentNovel] = useState<any>(null);
 
+  // 获取小说列表
+  const fetchNovels = async () => {
+    setLoading(true);
+    try {
+      const response = await getBooks(query); // 调用查询接口，传递查询条件
+      setDataSource(response.data); // 假设接口返回数据格式为 { data: [...] }
+    } catch (error) {
+      message.error('获取小说列表失败');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNovels(); // 页面加载时获取小说列表
+  }, [query]); // 查询条件变化时重新加载数据
+
   // 查询表单
   const onSearch = () => {
-    message.info('查询功能暂未实现');
+    fetchNovels();
   };
 
   const onReset = () => {
@@ -39,28 +51,33 @@ const NovelList: React.FC = () => {
   };
 
   // 删除
-  const handleDelete = (id: number) => {
-    setDataSource((prev) => prev.filter((item) => item.id !== id));
-    message.success('删除成功');
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteBook(id); // 调用删除接口
+      message.success('删除成功');
+      fetchNovels(); // 重新加载列表
+    } catch (error) {
+      message.error('删除失败');
+    }
   };
 
   // 保存（新建或修改）
-  const handleSave = (values: any) => {
-    if (currentNovel) {
-      // 修改
-      setDataSource((prev) =>
-        prev.map((item) => (item.id === currentNovel.id ? { ...item, ...values } : item))
-      );
-      message.success('修改成功');
-    } else {
-      // 新建
-      setDataSource((prev) => [
-        ...prev,
-        { id: prev.length + 1, cover: values.cover || '', ...values },
-      ]);
-      message.success('新建成功');
+  const handleSave = async (values: any) => {
+    try {
+      if (currentNovel) {
+        // 修改
+        await updateBook(currentNovel.id, values); // 调用更新接口
+        message.success('修改成功');
+      } else {
+        // 新建
+        await createBook(values); // 调用新建接口
+        message.success('新建成功');
+      }
+      setIsModalOpen(false);
+      fetchNovels(); // 重新加载列表
+    } catch (error) {
+      message.error('保存失败');
     }
-    setIsModalOpen(false);
   };
 
   // 表格列
@@ -70,11 +87,11 @@ const NovelList: React.FC = () => {
       title: '封面图',
       dataIndex: 'cover',
       key: 'cover',
-      align: 'center' as 'center', 
+      align: 'center' as 'center',
       render: (cover: string) => <img src={cover} alt="封面" style={{ width: 50, height: 50 }} />,
     },
     { title: '书名', dataIndex: 'title', align: 'center' as 'center', key: 'title' },
-    { title: '作者', dataIndex: 'author', align: 'center' as 'center',key: 'author' },
+    { title: '作者', dataIndex: 'author', align: 'center' as 'center', key: 'author' },
     { title: '描述', dataIndex: 'description', align: 'center' as 'center', key: 'description' },
     {
       title: '操作',
@@ -95,8 +112,8 @@ const NovelList: React.FC = () => {
 
   return (
     <div>
-      <Form className='check-form' layout="inline" style={{ marginBottom: 16 }}>
-        <Form.Item className='content-width' label="书名">
+      <Form className="check-form" layout="inline" style={{ marginBottom: 16 }}>
+        <Form.Item className="content-width" label="书名">
           <Input
             value={query.title}
             onChange={(e) => setQuery({ ...query, title: e.target.value })}
@@ -104,7 +121,7 @@ const NovelList: React.FC = () => {
             allowClear
           />
         </Form.Item>
-        <Form.Item className='content-width' label="作者">
+        <Form.Item className="content-width" label="作者">
           <Input
             value={query.author}
             onChange={(e) => setQuery({ ...query, author: e.target.value })}
@@ -122,7 +139,12 @@ const NovelList: React.FC = () => {
         </Form.Item>
       </Form>
 
-      <Button type="primary" icon={<PlusOutlined />} onClick={handleNew} style={{ marginBottom: 16, float: 'right' }}>
+      <Button
+        type="primary"
+        icon={<PlusOutlined />}
+        onClick={handleNew}
+        style={{ marginBottom: 16, float: 'right' }}
+      >
         新建
       </Button>
 
@@ -132,7 +154,7 @@ const NovelList: React.FC = () => {
         rowKey="id"
         loading={loading}
         pagination={{
-          pageSize: 1, // 每页显示 10 条数据
+          pageSize: 10, // 每页显示 10 条数据
           showTotal: (total) => `总计 ${total} 条数据`, // 显示总数据量
         }}
       />

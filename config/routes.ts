@@ -47,7 +47,7 @@ export default [
     path: '/novels',
     name: 'novels',
     routes: [
-      { path: '/novels', name: 'list.information-list', component: './NovelList' },
+      { path: '/novels/list', name: 'list.information-list', component: './NovelList' },
       { path: '/novels/categories', name: 'list.category-list', component: './Welcome' },
       { path: '/novels/statistics', name: 'data-statistics', component: './Welcome' },
     ],
@@ -56,7 +56,7 @@ export default [
     path: '/users',
     name: 'users',
     routes: [
-      { path: '/users', name: 'list.user-list', component: './Welcome' },
+      { path: '/users/list', name: 'list.user-list', component: './Welcome' },
       { path: '/users/roles', name: 'role-management', component: './Welcome' },
       { path: '/users/permissions', name: 'permission-management', component: './Welcome' },
     ],
