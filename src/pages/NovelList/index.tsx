@@ -17,14 +17,14 @@ const NovelList: React.FC = () => {
     setLoading(true);
     try {
       const response = await getBooks(query); // 调用查询接口，传递查询条件
-      setDataSource(response.data); // 假设接口返回数据格式为 { data: [...] }
+      setDataSource(response); // 直接将返回的数组赋值给 dataSource
     } catch (error) {
       message.error('获取小说列表失败');
     } finally {
       setLoading(false);
     }
   };
-
+   
   useEffect(() => {
     fetchNovels(); // 页面加载时获取小说列表
   }, [query]); // 查询条件变化时重新加载数据
@@ -84,6 +84,13 @@ const NovelList: React.FC = () => {
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', width: 50, align: 'center' as 'center' },
     {
+      title: '创建时间',
+      dataIndex: 'createDate',
+      align: 'center' as 'center',
+      key: 'createDate',
+      render: (text: string) => new Date(text).toLocaleString('zh-CN', { hour12: false }), // 格式化为指定时间格式
+    },
+    {
       title: '封面图',
       dataIndex: 'cover',
       key: 'cover',
@@ -93,6 +100,13 @@ const NovelList: React.FC = () => {
     { title: '书名', dataIndex: 'title', align: 'center' as 'center', key: 'title' },
     { title: '作者', dataIndex: 'author', align: 'center' as 'center', key: 'author' },
     { title: '描述', dataIndex: 'description', align: 'center' as 'center', key: 'description' },
+    {
+      title: '更新时间',
+      dataIndex: 'updateDate',
+      align: 'center' as 'center',
+      key: 'updateDate',
+      render: (text: string) => new Date(text).toLocaleString('zh-CN', { hour12: false }), // 格式化为指定时间格式
+    },
     {
       title: '操作',
       key: 'action',
@@ -152,7 +166,7 @@ const NovelList: React.FC = () => {
         columns={columns}
         dataSource={dataSource}
         rowKey="id"
-        loading={loading}
+        loading={loading}// 确保在加载时显示 loading
         pagination={{
           pageSize: 10, // 每页显示 10 条数据
           showTotal: (total) => `总计 ${total} 条数据`, // 显示总数据量

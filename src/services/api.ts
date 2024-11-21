@@ -1,11 +1,9 @@
 import request from './axios';
 
-export const getBooks = (params: any) => {
-  return request({
-    url: '/books',
-    method: 'GET',
-    params,
-  });
+export const getBooks = async (query?: { title?: string; author?: string }): Promise<any[]> => {
+  const params = new URLSearchParams(query).toString();
+  const response = await request.get(`/books?${params}`);
+  return response.data;
 };
 
 export const createBook = (data: any) => {
